@@ -1,0 +1,29 @@
+{
+  "name": "e_voting_backend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "celebrate": "^15.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-jwt": "^6.1.1",
+    "helmet": "^5.0.2",
+    "http-status": "^1.5.0",
+    "mongoose": "^6.2.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
