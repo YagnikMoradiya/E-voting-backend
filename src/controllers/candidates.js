@@ -1,6 +1,6 @@
 import { celebrate, Joi } from "celebrate";
 import httpStatus from "http-status";
-import { Candidate } from "../models/index.js";
+import { Candidate, Election } from "../models/index.js";
 import APIResponse from "../utils/APIResponse.js";
 
 export const registerCandidate = {
@@ -41,6 +41,32 @@ export const registerCandidate = {
 
         } catch (error) {
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse(null, 'Candidate not added', httpStatus.INTERNAL_SERVER_ERROR, error));
+        }
+    }
+}
+
+export const getCandidates = {
+    validator: celebrate({
+        query: Joi.object().keys({
+            electionId: Joi.string().required(),
+        })
+    }),
+    controller: async (req, res) => {
+        try {
+            const election = await Election.findById(req.query.electionId)
+                .populate({
+                    path: 'candidates'
+                })
+                .select('candidates')
+
+            if (!election) {
+                return res.status(httpStatus.BAD_REQUEST).json(new APIResponse(null, 'Candidate not added', httpStatus.BAD_REQUEST));
+            }
+
+            return res.status(httpStatus.OK).json(new APIResponse(election.candidates, 'candidates got successfully', httpStatus.OK));
+
+        } catch (error) {
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse(null, 'Error in getting candidates', httpStatus.INTERNAL_SERVER_ERROR, error));
         }
     }
 }

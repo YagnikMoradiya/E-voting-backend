@@ -15,4 +15,10 @@ const RequestType = {
   accepted: "ACCEPTED",
 };
 
-export { GenderType, RoleType, RequestType };
+const ElectionFilterType = {
+  past: "PAST",
+  current: "CURRENT",
+  upcoming: "UPCOMING"
+}
+
+export { GenderType, RoleType, RequestType, ElectionFilterType };

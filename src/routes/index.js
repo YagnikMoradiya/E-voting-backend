@@ -2,6 +2,7 @@ import jwt from "express-jwt";
 import { jwt_secret } from "../../config.js";
 import voters from "./voters.js";
 import candidates from "./candidates.js";
+import elections from "./elections.js";
 
 export const setup = (app) => {
     app.use(
@@ -17,12 +18,14 @@ export const setup = (app) => {
                 "/api/v1/voter/forgot-password",
                 "/api/v1/candidate/register",
                 "/api/v1/candidate/edit",
+                "/api/v1/election/register",
 
-                // /^\/api\/v1\/shop\/search-shop\/*/,
+                /^\/api\/v1\/election\/getElections\/*/,
             ],
         })
     );
 
     app.use("/api/v1/voter", voters);
     app.use("/api/v1/candidate", candidates);
+    app.use("/api/v1/election", elections);
 };

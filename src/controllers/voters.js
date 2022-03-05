@@ -12,6 +12,7 @@ export const signUp = {
             fullName: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().min(8).required(),
+            dob: Joi.string().required(),
             gender: Joi.string().valid(GenderType.male, GenderType.female, GenderType.other).required(),
         })
     }),
@@ -23,6 +24,7 @@ export const signUp = {
                 password: await hashPassword(req.body.password, 10),
                 fullName: req.body.fullName,
                 gender: req.body.gender,
+                dob: req.body.dob
             });
 
             const voter = await newVoter.save();
@@ -37,6 +39,7 @@ export const signUp = {
                     fullName: voter.fullName,
                     email: voter.email,
                     gender: voter.gender,
+                    dob: voter.dob,
                     token,
                 };
 
@@ -90,6 +93,7 @@ export const signIn = {
                 fullName: voterExists.fullName,
                 email: voterExists.email,
                 gender: voterExists.gender,
+                dob: voterExists.dob,
                 token,
             };
 

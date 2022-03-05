@@ -2,10 +2,18 @@ import mongoose from "mongoose";
 
 const ElectionSchema = new mongoose.Schema(
     {
-        date: {
-            type: Date,
-            required: true,
+        electionName: {
+            type: String,
+            required: true
         },
+        organizationName: {
+            type: String,
+            required: true
+        },
+        // electionDate: {
+        //     type: Date,
+        //     required: true
+        // },
         startTime: {
             type: Date,
             required: true,
