@@ -121,3 +121,35 @@ export const editCandidate = {
         }
     }
 }
+
+export const getCandidateById = {
+    validator: celebrate({
+        query: Joi.object().keys({
+            id: Joi.string().required()
+        })
+    }),
+
+    controller: async (req, res) => {
+        try {
+            const candidate = await Candidate.findOne(({
+                _id: req.query.id
+            }))
+
+            if (!candidate) {
+                return res.status(httpStatus.BAD_REQUEST).json(new APIResponse(null, 'Candidate not found', httpStatus.BAD_REQUEST));
+            }
+
+            const candidateData = {
+                email: candidate.email,
+                phone: candidate.phone,
+                fullName: candidate.fullName,
+                icon: candidate.icon,
+                regNo: candidate.regNo
+            }
+            return res.status(httpStatus.OK).json(new APIResponse(candidateData, 'Candidate updated successfully', httpStatus.OK));
+
+        } catch (error) {
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse(null, 'Candidate not updated', httpStatus.INTERNAL_SERVER_ERROR, error));
+        }
+    }
+}

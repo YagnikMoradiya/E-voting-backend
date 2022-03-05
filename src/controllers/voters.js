@@ -109,3 +109,41 @@ export const signIn = {
     }
 }
 
+export const authenticateVoter = {
+    controller: async (req, res) => {
+        try {
+            const voterExists = await Voter.findOne({
+                _id: req.user.id,
+            });
+
+            if (!voterExists) {
+                return res
+                    .status(httpStatus.UNAUTHORIZED)
+                    .json(new APIResponse(null, "Invalid credentials", httpStatus.UNAUTHORIZED));
+            }
+
+            const token = getJWTToken({
+                id: voterExists._id
+            });
+
+            const voterData = {
+                id: voterExists._id,
+                fullName: voterExists.fullName,
+                email: voterExists.email,
+                gender: voterExists.gender,
+                dob: voterExists.dob,
+                token,
+            };
+
+            return res
+                .status(httpStatus.OK)
+                .json(new APIResponse(voterData, "Voter found in list", httpStatus.OK));
+
+        } catch (error) {
+            return res
+                .status(httpStatus.INTERNAL_SERVER_ERROR)
+                .json(new APIResponse(null, "Voter not found in list.", httpStatus.INTERNAL_SERVER_ERROR, error));
+        }
+    }
+}
+
